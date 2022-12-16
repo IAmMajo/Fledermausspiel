@@ -13,13 +13,20 @@ public class Bat : MonoBehaviour
     [SerializeField]
     Vector3 wingBeatVelocity;
 
+    [SerializeField]
+    float rotationFactor;
+
+    
+
     int wingBeatDelay;
     int wingBeatDelayCounter = 0;
 
+    Rigidbody comp_rb;
     // Start is called before the first frame update
     void Start()
     {
         this.wingBeatDelay = (int)(1 / (Time.fixedDeltaTime * this.wingBeatsPerSecond));
+        comp_rb = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
@@ -28,7 +35,7 @@ public class Bat : MonoBehaviour
         {
             if (this.wingBeatDelayCounter == this.wingBeatDelay)
             {
-                GetComponent<Rigidbody>().velocity += wingBeatVelocity;
+                comp_rb.velocity += wingBeatVelocity;
                 this.wingBeatDelayCounter = 0;
             }
             else
@@ -41,5 +48,11 @@ public class Bat : MonoBehaviour
         {
             this.wingBeatDelayCounter = 0;
         }
+        //places the transform to te transform of the camera parent(child with index 3)
+        if (Input.GetMouseButton(1))
+        {
+            transform.eulerAngles += (transform.GetChild(3).eulerAngles-transform.eulerAngles)*rotationFactor;
+        }
     }
+    
 }
