@@ -11,7 +11,7 @@ public class Bat : MonoBehaviour
     float wingBeatsPerSecond;
 
     [SerializeField]
-    Vector3 wingBeatVelocity;
+    float wingBeatVelocity;
 
     [SerializeField]
     float rotationFactor;
@@ -35,24 +35,32 @@ public class Bat : MonoBehaviour
         {
             if (this.wingBeatDelayCounter == this.wingBeatDelay)
             {
-                comp_rb.velocity += wingBeatVelocity;
+                comp_rb.AddForce(new Vector3(0,wingBeatVelocity,0)+transform.forward, ForceMode.VelocityChange);
                 this.wingBeatDelayCounter = 0;
             }
             else
             {
                 this.wingBeatDelayCounter++;
             }
-            Debug.Log(this.wingBeatDelayCounter);
         }
         else
         {
             this.wingBeatDelayCounter = 0;
         }
-        //places the transform to te transform of the camera parent(child with index 3)
+        //places the transform to te transform of the camera parent(child with index 3) 
         if (Input.GetMouseButton(1))
         {
-            transform.eulerAngles += (transform.GetChild(3).eulerAngles-transform.eulerAngles)*rotationFactor;
+            //TO DO: make smooth
+            transform.eulerAngles += transform.GetChild(3).eulerAngles-transform.eulerAngles;
         }
+
+        //when you look down you should get faster/ values found trough log
+        if(transform.eulerAngles.x>15 && transform.eulerAngles.x<21){
+            comp_rb.AddForce(transform.forward*transform.eulerAngles.x*5, ForceMode.Acceleration);
+            Debug.Log(true);
+        }
+            
+        
     }
     
 }
