@@ -22,6 +22,9 @@ public class Bat : MonoBehaviour
     [SerializeField]
     float dragFactor;
 
+    [SerializeField]
+    float breakFactor;
+
     
 
     int wingBeatDelay;
@@ -51,35 +54,43 @@ public class Bat : MonoBehaviour
         }
         else if(Input.GetKey(breakKey)) 
         {
-            comp_rb.AddForce(comp_rb.velocity/3f*-1, ForceMode.Force);
+            if(comp_rb.velocity.magnitude>1.3f)
+            {
+                 comp_rb.velocity -= new Vector3(comp_rb.velocity.x*breakFactor,comp_rb.velocity.y*breakFactor,comp_rb.velocity.z*breakFactor);
+            }
+            else
+            {
+                comp_rb.velocity = new Vector3(0,0,0);
+            }
         }
-        else if(transform.eulerAngles.x>3 && transform.eulerAngles.x<21) //when you look down you should get faster/ values found trough log
+        else if(transform.eulerAngles.x>=0 && transform.eulerAngles.x<21)//values that check if you look down
         {
+            //when you look down you get faster
             comp_rb.AddForce(transform.forward*transform.eulerAngles.x*speedFactor, ForceMode.Acceleration);
+        }
+        else if(comp_rb.velocity.magnitude>10)//checks if the velocity is still high enough to keep momentum
+        {
+            //keep of velocity
+            comp_rb.AddForce(new Vector3(comp_rb.velocity.x*dragFactor/5+transform.forward.x,comp_rb.velocity.z*dragFactor,comp_rb.velocity.y*dragFactor/5+transform.forward.y), ForceMode.Force);
+            Debug.Log(comp_rb.velocity.magnitude);
         }
         else
         {
-            //loss of velocity when you look up
-            comp_rb.AddForce(-1*(comp_rb.velocity*dragFactor)+transform.forward*dragFactor, ForceMode.Force);
             this.wingBeatDelayCounter = 0;
         }
-        //places the transform to te transform of the camera parent(child with index 3) 
+        
         if (Input.GetMouseButton(1))
         {
-            //as to be true otherwise to prevent random tumbeling
+            //has to be true otherwise to prevent random tumbeling
             comp_rb.freezeRotation = false;
+            //places the transform to te transform of the camera parent(child with index 3) 
             //TO DO: make smooth
             transform.eulerAngles += transform.GetChild(3).eulerAngles-transform.eulerAngles;
         }
         else
         {
             comp_rb.freezeRotation = true;
-        }
-        
-
-        
-            
-        
+        }    
     }
     
 }
