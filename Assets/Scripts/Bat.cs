@@ -71,14 +71,19 @@ public class Bat : MonoBehaviour
         else if(comp_rb.velocity.magnitude>10)//checks if the velocity is still high enough to keep momentum
         {
             //keep of velocity
-            comp_rb.AddForce(new Vector3(comp_rb.velocity.x*dragFactor/5+transform.forward.x,comp_rb.velocity.z*dragFactor,comp_rb.velocity.y*dragFactor/5+transform.forward.y), ForceMode.Force);
-            Debug.Log(comp_rb.velocity.magnitude);
+            comp_rb.AddForce(
+                new Vector3(
+                    comp_rb.velocity.x*dragFactor/5+transform.forward.x,
+                    comp_rb.velocity.z*dragFactor*transform.forward.y,
+                    comp_rb.velocity.y*dragFactor/5+transform.forward.z
+                ),
+                 ForceMode.Force);  
         }
         else
         {
             this.wingBeatDelayCounter = 0;
         }
-        
+
         if (Input.GetMouseButton(1))
         {
             //has to be true otherwise to prevent random tumbeling
