@@ -308,8 +308,8 @@ MonoBehaviour:
   breakKey: 306
   wingBeatsPerSecond: 5
   wingBeatVelocity: 3
-  speedFactor: 2
-  dragFactor: 0.9
+  speedFactor: 1.5
+  dragFactor: 0.7
   breakFactor: 0.03
 --- !u!65 &861269547
 BoxCollider:
