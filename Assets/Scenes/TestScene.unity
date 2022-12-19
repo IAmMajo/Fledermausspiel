@@ -285,9 +285,9 @@ Rigidbody:
   m_GameObject: {fileID: 861269541}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 1
-  m_UseGravity: 1
+  m_Drag: 0.5
+  m_AngularDrag: 0.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -305,9 +305,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flyingKey: 32
+  breakKey: 306
   wingBeatsPerSecond: 5
-  wingBeatVelocity: 5
-  rotationFactor: 0.1
+  wingBeatVelocity: 3
+  speedFactor: 2
+  dragFactor: 0.9
+  breakFactor: 0.03
 --- !u!65 &861269547
 BoxCollider:
   m_ObjectHideFlags: 0

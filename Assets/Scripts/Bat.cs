@@ -8,13 +8,22 @@ public class Bat : MonoBehaviour
     KeyCode flyingKey;
 
     [SerializeField]
+    KeyCode breakKey;
+
+    [SerializeField]
     float wingBeatsPerSecond;
 
     [SerializeField]
     float wingBeatVelocity;
 
     [SerializeField]
-    float rotationFactor;
+    float speedFactor;
+
+    [SerializeField]
+    float dragFactor;
+
+    [SerializeField]
+    float breakFactor;
 
     
 
@@ -35,7 +44,7 @@ public class Bat : MonoBehaviour
         {
             if (this.wingBeatDelayCounter == this.wingBeatDelay)
             {
-                comp_rb.AddForce(new Vector3(0,wingBeatVelocity,0)+transform.forward, ForceMode.VelocityChange);
+                comp_rb.AddForce(new Vector3(transform.forward.x,wingBeatVelocity,transform.forward.z), ForceMode.VelocityChange);
                 this.wingBeatDelayCounter = 0;
             }
             else
@@ -43,24 +52,45 @@ public class Bat : MonoBehaviour
                 this.wingBeatDelayCounter++;
             }
         }
+        else if(Input.GetKey(breakKey)) 
+        {
+            if(comp_rb.velocity.magnitude>1.3f)
+            {
+                 comp_rb.velocity -= new Vector3(comp_rb.velocity.x*breakFactor,comp_rb.velocity.y*breakFactor,comp_rb.velocity.z*breakFactor);
+            }
+            else
+            {
+                comp_rb.velocity = new Vector3(0,0,0);
+            }
+        }
+        else if(transform.eulerAngles.x>=0 && transform.eulerAngles.x<21)//values that check if you look down
+        {
+            //when you look down you get faster
+            comp_rb.AddForce(transform.forward*transform.eulerAngles.x*speedFactor, ForceMode.Acceleration);
+        }
+        else if(comp_rb.velocity.magnitude>10)//checks if the velocity is still high enough to keep momentum
+        {
+            //keep of velocity
+            comp_rb.AddForce(new Vector3(comp_rb.velocity.x*dragFactor/5+transform.forward.x,comp_rb.velocity.z*dragFactor,comp_rb.velocity.y*dragFactor/5+transform.forward.y), ForceMode.Force);
+            Debug.Log(comp_rb.velocity.magnitude);
+        }
         else
         {
             this.wingBeatDelayCounter = 0;
         }
-        //places the transform to te transform of the camera parent(child with index 3) 
+        
         if (Input.GetMouseButton(1))
         {
+            //has to be true otherwise to prevent random tumbeling
+            comp_rb.freezeRotation = false;
+            //places the transform to te transform of the camera parent(child with index 3) 
             //TO DO: make smooth
             transform.eulerAngles += transform.GetChild(3).eulerAngles-transform.eulerAngles;
         }
-
-        //when you look down you should get faster/ values found trough log
-        if(transform.eulerAngles.x>15 && transform.eulerAngles.x<21){
-            comp_rb.AddForce(transform.forward*transform.eulerAngles.x*5, ForceMode.Acceleration);
-            Debug.Log(true);
-        }
-            
-        
+        else
+        {
+            comp_rb.freezeRotation = true;
+        }    
     }
     
 }
