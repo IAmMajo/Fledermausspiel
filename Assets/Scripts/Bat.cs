@@ -44,7 +44,7 @@ public class Bat : MonoBehaviour
         {
             if (this.wingBeatDelayCounter == this.wingBeatDelay)
             {
-                comp_rb.AddForce(new Vector3(transform.forward.x,wingBeatVelocity,transform.forward.z), ForceMode.VelocityChange);
+                comp_rb.AddRelativeForce(new Vector3(0,wingBeatVelocity,0.5f), ForceMode.VelocityChange);
                 this.wingBeatDelayCounter = 0;
             }
             else
@@ -66,16 +66,16 @@ public class Bat : MonoBehaviour
         else if(transform.eulerAngles.x>=0 && transform.eulerAngles.x<21)//values that check if you look down
         {
             //when you look down you get faster
-            comp_rb.AddForce(transform.forward*transform.eulerAngles.x*speedFactor, ForceMode.Acceleration);
+            comp_rb.AddRelativeForce( new Vector3(0,0,transform.eulerAngles.x*speedFactor), ForceMode.Acceleration);
         }
-        else if(comp_rb.velocity.magnitude>10)//checks if the velocity is still high enough to keep momentum
+        else if(comp_rb.velocity.magnitude>15)//checks if the velocity is still high enough to keep momentum
         {
             //keep of velocity
-            comp_rb.AddForce(
+            comp_rb.AddRelativeForce(
                 new Vector3(
-                    comp_rb.velocity.x*dragFactor/5+transform.forward.x,
-                    comp_rb.velocity.z*dragFactor*transform.forward.y,
-                    comp_rb.velocity.y*dragFactor/5+transform.forward.z
+                    0,
+                    0,
+                    comp_rb.velocity.magnitude*dragFactor
                 ),
                  ForceMode.Force);  
         }
