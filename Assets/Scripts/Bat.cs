@@ -89,7 +89,7 @@ public class Bat : MonoBehaviour
 
         if (Input.GetMouseButton(1))
         {
-            Debug.Log("Mouse Button 1");
+            
             //has to be true otherwise to prevent random tumbeling
             comp_rb.freezeRotation = false;
             //places the transform to te transform of the camera parent(child with index 3) 
