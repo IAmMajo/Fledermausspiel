@@ -21,6 +21,7 @@ public class GunScriptPlayer : MonoBehaviour
 
     //Refrence
     public Transform attackPoint;
+    public Transform target;
     public Camera cam;
 
     //Graphics
@@ -75,21 +76,7 @@ public class GunScriptPlayer : MonoBehaviour
     {
         readyToShoot = false;
 
-        //ray cast towards the middle of the screen to find the point we are shooting at
-        //(Needs to be changed to shoot in the direction the weapon is facing)
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f,0.5f,0));
-        RaycastHit hit;
-        Vector3 targetPoint;
-        if(Physics.Raycast(ray, out hit))
-        {
-            targetPoint = hit.point; //Point hit by the Ray
-        }
-        else
-        {
-            targetPoint = ray.GetPoint(75);//Point far away from Player
-        }
-
-        Vector3 direction = targetPoint - attackPoint.position + new Vector3( Random.Range(-spread, spread), Random.Range(-spread, spread),0);
+        Vector3 direction = target.position - attackPoint.position + new Vector3( Random.Range(-spread, spread), Random.Range(-spread, spread),0);
 
         GameObject currentBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity);
 
