@@ -25,7 +25,8 @@ public class Bat : MonoBehaviour
     [SerializeField]
     float breakFactor;
 
-    
+    [SerializeField]
+    float rotFactor;
 
     int wingBeatDelay;
     int wingBeatDelayCounter = 0;
@@ -93,12 +94,8 @@ public class Bat : MonoBehaviour
             //has to be true otherwise to prevent random tumbeling
             comp_rb.freezeRotation = false;
             //places the transform to te transform of the camera parent(child with index 3) 
-           
-            transform.Rotate(new Vector3(
-                    cam_parent.transform.rotation.x-transform.rotation.x,
-                    cam_parent.transform.rotation.y-transform.rotation.y,
-                    0
-                )*2f, Space.Self);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, cam_parent.transform.rotation, rotFactor);
         }
         else
         {
