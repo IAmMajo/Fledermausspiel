@@ -30,13 +30,13 @@ public class Bat : MonoBehaviour
     int wingBeatDelay;
     int wingBeatDelayCounter = 0;
 
-    Transform cam_parent;
+    [SerializeField]
+    GameObject cam_parent;
 
     Rigidbody comp_rb;
     // Start is called before the first frame update
     void Start()
     {
-        cam_parent = transform.GetChild(2);
         this.wingBeatDelay = (int)(1 / (Time.fixedDeltaTime * this.wingBeatsPerSecond));
         comp_rb = GetComponent<Rigidbody>();
     }
@@ -95,8 +95,8 @@ public class Bat : MonoBehaviour
             //places the transform to te transform of the camera parent(child with index 3) 
            
             transform.Rotate(new Vector3(
-                    cam_parent.rotation.x-transform.rotation.x,
-                    cam_parent.rotation.y-transform.rotation.y,
+                    cam_parent.transform.rotation.x-transform.rotation.x,
+                    cam_parent.transform.rotation.y-transform.rotation.y,
                     0
                 )*2f, Space.Self);
         }
