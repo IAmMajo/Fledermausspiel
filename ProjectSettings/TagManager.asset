@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CameraParent
+  - Bullet
   layers:
   - Default
   - TransparentFX
