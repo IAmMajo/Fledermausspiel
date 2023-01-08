@@ -15,4 +15,9 @@ public class HealthAndDamage : MonoBehaviour
     {
         
     }
+
+    void OnTriggerEnter()
+    {
+        Debug.Log("Collision");
+    }
 }
