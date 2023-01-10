@@ -315,7 +315,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788892584356203064}
-  m_LocalRotation: {x: -0.75047594, y: 0.58605826, z: -0.049727306, w: 0.30141154}
+  m_LocalRotation: {x: -0.7363474, y: 0.647177, z: -0.12859558, w: 0.14972572}
   m_LocalPosition: {x: -5.013133e-19, y: -0.00437644, z: 0.00022551834}
   m_LocalScale: {x: 1, y: 1, z: 1.0000032}
   m_ConstrainProportionsScale: 0
@@ -647,7 +647,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1259359290143141802}
   - component: {fileID: 399482790}
-  - component: {fileID: 399482791}
   - component: {fileID: 399482792}
   m_Layer: 0
   m_Name: FledermausPrefab
@@ -691,19 +690,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!65 &399482791
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887558233877493008}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &399482792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,6 +869,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3397326169084985979}
+  - component: {fileID: 6331388422238397842}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -906,6 +893,19 @@ Transform:
   m_Father: {fileID: 1259359290143141802}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6331388422238397842
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2171147190253644841}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.23, y: 0.12, z: 0.06}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2295110251724364945
 GameObject:
   m_ObjectHideFlags: 0
