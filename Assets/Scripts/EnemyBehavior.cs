@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+tutorial: https://www.youtube.com/watch?v=UjkSFoLxesw
+*/
 public class EnemyBehavior : MonoBehaviour
 {
     public NavMeshAgent agent;
@@ -39,8 +42,8 @@ public class EnemyBehavior : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+        if (!playerInSightRange && !playerInAttackRange) Patroling(); else
+        if (playerInSightRange && !playerInAttackRange) ChasePlayer(); else
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
     }
 
@@ -109,11 +112,12 @@ public class EnemyBehavior : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDrawGizmosSelected()
+/*    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
+*/
 }
