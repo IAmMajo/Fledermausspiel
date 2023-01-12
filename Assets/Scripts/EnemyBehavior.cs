@@ -42,23 +42,21 @@ public class EnemyBehavior : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling(); else
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer(); else
+        if (!playerInSightRange && !playerInAttackRange) Patroling(); 
+        if (playerInSightRange && !playerInAttackRange) ChasePlayer(); 
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
     }
 
     private void Patroling()
     {
         if (!walkPointSet) SearchWalkPoint();
+        
+        if (walkPointSet) agent.SetDestination(walkPoint);
 
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        Vector2 distanceToWalkPoint = new Vector2(transform.position.x, transform.position.z) - new Vector2(walkPoint.x, walkPoint.z);
 
         //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
-            walkPointSet = false;
+        if (distanceToWalkPoint.magnitude < 1f) walkPointSet = false;
     }
     private void SearchWalkPoint()
     {
@@ -68,7 +66,7 @@ public class EnemyBehavior : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        if (Physics.Raycast(walkPoint, -transform.up, whatIsGround))
             walkPointSet = true;
     }
 
