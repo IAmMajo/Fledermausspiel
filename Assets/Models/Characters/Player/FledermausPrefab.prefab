@@ -315,7 +315,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788892584356203064}
-  m_LocalRotation: {x: -0.7363474, y: 0.647177, z: -0.12859558, w: 0.14972572}
+  m_LocalRotation: {x: -0.75047594, y: 0.5860583, z: -0.049727418, w: 0.30141142}
   m_LocalPosition: {x: -5.013133e-19, y: -0.00437644, z: 0.00022551834}
   m_LocalScale: {x: 1, y: 1, z: 1.0000032}
   m_ConstrainProportionsScale: 0
@@ -648,6 +648,7 @@ GameObject:
   - component: {fileID: 1259359290143141802}
   - component: {fileID: 399482790}
   - component: {fileID: 399482792}
+  - component: {fileID: 6658086320647044147}
   m_Layer: 0
   m_Name: FledermausPrefab
   m_TagString: Untagged
@@ -711,6 +712,26 @@ MonoBehaviour:
   breakFactor: 0.03
   rotFactor: 0.1
   cam_parent: {fileID: 62881111}
+--- !u!95 &6658086320647044147
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887558233877493008}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1887558234154195156
 GameObject:
   m_ObjectHideFlags: 0
