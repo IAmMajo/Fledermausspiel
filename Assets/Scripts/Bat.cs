@@ -1,106 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bat : MonoBehaviour
 {
-    [SerializeField]
-    KeyCode flyingKey;
 
-    [SerializeField]
-    KeyCode breakKey;
+  [SerializeField]
+  KeyCode[] keys;
 
-    [SerializeField]
-    float wingBeatsPerSecond;
+  [SerializeField]
+  Vector3[] velocities;
 
-    [SerializeField]
-    float wingBeatVelocity;
+  [SerializeField]
+  float rotFactor;
 
-    [SerializeField]
-    float speedFactor;
+  [SerializeField]
+  GameObject cam_parent;
 
-    [SerializeField]
-    float dragFactor;
+  private Rigidbody comp_rb;
 
-    [SerializeField]
-    float breakFactor;
+  // Start is called before the first frame update
+  void Start()
+  {
+    this.comp_rb = GetComponent<Rigidbody>();
+  }
 
-    [SerializeField]
-    float rotFactor;
-
-    int wingBeatDelay;
-    int wingBeatDelayCounter = 0;
-
-    [SerializeField]
-    GameObject cam_parent;
-
-    Rigidbody comp_rb;
-    // Start is called before the first frame update
-    void Start()
+  void FixedUpdate()
+  {
+    for (int i = 0; i < keys.Length; i++)
     {
-        this.wingBeatDelay = (int)(1 / (Time.fixedDeltaTime * this.wingBeatsPerSecond));
-        comp_rb = GetComponent<Rigidbody>();
+      if (Input.GetKey(this.keys[i]))
+      {
+        this.comp_rb.AddRelativeForce(this.velocities[i], ForceMode.VelocityChange);
+      }
     }
 
-    void FixedUpdate()
+    if (Input.GetMouseButton(1))
     {
-        if (Input.GetKey(flyingKey))
-        {
-            if (this.wingBeatDelayCounter == this.wingBeatDelay)
-            {
-                comp_rb.AddRelativeForce(new Vector3(0,wingBeatVelocity,0.5f), ForceMode.VelocityChange);
-                this.wingBeatDelayCounter = 0;
-            }
-            else
-            {
-                this.wingBeatDelayCounter++;
-            }
-        }
-        else if(Input.GetKey(breakKey)) 
-        {
-            if(comp_rb.velocity.magnitude>1.3f)
-            {
-                 comp_rb.velocity -= new Vector3(comp_rb.velocity.x*breakFactor,comp_rb.velocity.y*breakFactor,comp_rb.velocity.z*breakFactor);
-            }
-            else
-            {
-                comp_rb.velocity = new Vector3(0,0,0);
-            }
-        }
-        else if(transform.eulerAngles.x>=0 && transform.eulerAngles.x<21)//values that check if you look down
-        {
-            //when you look down you get faster
-            comp_rb.AddRelativeForce( new Vector3(0,0,transform.eulerAngles.x*speedFactor), ForceMode.Acceleration);
-        }
-        else if(comp_rb.velocity.magnitude>15)//checks if the velocity is still high enough to keep momentum
-        {
-            //keep of velocity
-            comp_rb.AddRelativeForce(
-                new Vector3(
-                    0,
-                    0,
-                    comp_rb.velocity.magnitude*dragFactor
-                ),
-                 ForceMode.Force);  
-        }
-        else
-        {
-            this.wingBeatDelayCounter = 0;
-        }
 
-        if (Input.GetMouseButton(1))
-        {
-            
-            //has to be true otherwise to prevent random tumbeling
-            comp_rb.freezeRotation = false;
-            //places the transform to te transform of the camera parent(child with index 3) 
+      //has to be true otherwise to prevent random tumbeling
+      this.comp_rb.freezeRotation = false;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, cam_parent.transform.rotation, rotFactor);
-        }
-        else
-        {
-            comp_rb.freezeRotation = true;
-        }    
+      //places the transform to the transform of the camera parent
+      this.transform.rotation = Quaternion.Slerp(
+        this.transform.rotation,
+        this.cam_parent.transform.rotation,
+        this.rotFactor
+      );
     }
-    
+    else
+    {
+      this.comp_rb.freezeRotation = true;
+    }
+  }
 }
