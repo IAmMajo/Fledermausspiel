@@ -42,7 +42,8 @@ public class Bat : MonoBehaviour
       //places the transform to the transform of the camera parent
       this.transform.rotation = Quaternion.Slerp(
         this.transform.rotation,
-        this.cam_parent.transform.rotation,
+        new Quaternion( 0,this.cam_parent.transform.rotation.y,
+        0,this.cam_parent.transform.rotation.w),
         this.rotFactor
       );
     }
