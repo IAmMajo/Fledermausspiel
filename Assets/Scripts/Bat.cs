@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bat : MonoBehaviour
 {
@@ -60,11 +61,13 @@ public class Bat : MonoBehaviour
     {
         health -= damage;
 
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+        if (health <= 0) Invoke(nameof(DestroyPlayer), 0.5f);
     }
 
-    private void DestroyEnemy()
+    private void DestroyPlayer()
     {
-        Destroy(gameObject);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("DeathScreen");
     }
 }

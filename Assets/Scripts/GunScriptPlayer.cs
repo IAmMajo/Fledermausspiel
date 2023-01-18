@@ -63,7 +63,7 @@ public class GunScriptPlayer : MonoBehaviour
         }
         else
         {
-            if(allowInvoke && !rechargeInvoked && bulletsLeft<magazineSize)
+            if(allowInvoke && !rechargeInvoked && bulletsLeft<magazineSize && !reloading)
             {       
                 rechargeInvoked = true;
                 Invoke("AutoRecharge", autoRechargeTime);
