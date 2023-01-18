@@ -8,6 +8,7 @@ tutorial: https://www.youtube.com/watch?v=UjkSFoLxesw
 */
 public class EnemyBehavior : MonoBehaviour
 {
+    public Transform weapon;
     public NavMeshAgent agent;
 
     public Transform player;
@@ -32,7 +33,6 @@ public class EnemyBehavior : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -42,19 +42,35 @@ public class EnemyBehavior : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling(); 
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer(); 
+        if (!playerInAttackRange) Patroling(); 
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Bullet")
+        {
+            
+            TakeDamage(1);
+        }
+    }
     private void Patroling()
     {
-        if (!walkPointSet) SearchWalkPoint();
+        if(playerInSightRange)
+        {
+            if (!walkPointSet) SearchWalkPoint();
+            if(walkPointSet && new Vector2(walkPoint.x-player.position.x,walkPoint.z-player.position.z).magnitude<new Vector2(transform.position.x-player.position.x,transform.position.z-player.position.z).magnitude) agent.SetDestination(walkPoint);
+            else SearchWalkPoint();
+        }
+        else
+        {
+            if (!walkPointSet) SearchWalkPoint();
         
         if (walkPointSet) agent.SetDestination(walkPoint);
 
+        }
+        
         Vector2 distanceToWalkPoint = new Vector2(transform.position.x, transform.position.z) - new Vector2(walkPoint.x, walkPoint.z);
-
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f) walkPointSet = false;
     }
@@ -70,13 +86,9 @@ public class EnemyBehavior : MonoBehaviour
             walkPointSet = true;
     }
 
-    private void ChasePlayer()
-    {
-        agent.SetDestination(player.position);
-    }
-
     private void AttackPlayer()
     {
+        
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
 
@@ -84,10 +96,11 @@ public class EnemyBehavior : MonoBehaviour
 
         if (!alreadyAttacked)
         {
+            float randomY = Random.Range(-.02f,.02f);
+            float randomX = Random.Range(-.02f,.02f);
             //Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Rigidbody rb = Instantiate(projectile, weapon.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce((transform.forward + new Vector3(randomX,randomY,0)) * 50f, ForceMode.Impulse);
             //End of attack code
 
             alreadyAttacked = true;
@@ -110,12 +123,4 @@ public class EnemyBehavior : MonoBehaviour
         Destroy(gameObject);
     }
 
-/*    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
-    }
-*/
 }
