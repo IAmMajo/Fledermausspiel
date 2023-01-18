@@ -33,12 +33,8 @@ public class Bat : MonoBehaviour
       }
     }
 
-    if (Input.GetMouseButton(1))
+    if (!Input.GetMouseButton(1))
     {
-
-      //has to be true otherwise to prevent random tumbeling
-      this.comp_rb.freezeRotation = false;
-
       //places the transform to the transform of the camera parent
       this.transform.rotation = Quaternion.Slerp(
         this.transform.rotation,
@@ -47,9 +43,6 @@ public class Bat : MonoBehaviour
         this.rotFactor
       );
     }
-    else
-    {
-      this.comp_rb.freezeRotation = true;
-    }
+    
   }
 }
