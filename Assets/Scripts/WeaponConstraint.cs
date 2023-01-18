@@ -9,8 +9,8 @@ public class WeaponConstraint : MonoBehaviour
     {
         
             Vector3 currentEulerAngles = parent.eulerAngles;
-            if (currentEulerAngles.x > 20 && currentEulerAngles.x < 180)
-                currentEulerAngles.x = Mathf.Clamp(currentEulerAngles.x, 0, 20);
+            if (currentEulerAngles.x > 100 && currentEulerAngles.x < 180)
+                currentEulerAngles.x = Mathf.Clamp(currentEulerAngles.x, 0, 100);
             else
             if (currentEulerAngles.x < 350 && currentEulerAngles.x >= 180)
                 currentEulerAngles.x = Mathf.Clamp(currentEulerAngles.x, 350, 360);
