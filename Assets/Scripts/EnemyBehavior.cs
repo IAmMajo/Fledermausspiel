@@ -46,6 +46,14 @@ public class EnemyBehavior : MonoBehaviour
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Bullet")
+        {
+            
+            TakeDamage(1);
+        }
+    }
     private void Patroling()
     {
         if(playerInSightRange)
