@@ -329,6 +329,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2274172891702154980, guid: 215338c764b8f9a4b8fcadaba6a20835, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2274172891702154980, guid: 215338c764b8f9a4b8fcadaba6a20835, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2274172891702154980, guid: 215338c764b8f9a4b8fcadaba6a20835, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -257
+      objectReference: {fileID: 0}
     - target: {fileID: 2274172891702154981, guid: 215338c764b8f9a4b8fcadaba6a20835, type: 3}
       propertyPath: m_text
       value: Du Bist Gestorben
